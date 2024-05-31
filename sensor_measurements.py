@@ -64,7 +64,7 @@ class EnvironmentSensor:
             "temperature": tempC,
             "air_quality_index": aqi[0],
             "TVOC": tvoc,
-            "eCO2": eco2,
+            "eCO2": eco2[0],
             "ambient_light": light_val
         }
 
