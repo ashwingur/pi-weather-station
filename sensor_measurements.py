@@ -19,6 +19,7 @@ class EnvironmentSensor:
     def __init__(self, mode=Mode.TEST) -> None:
         load_dotenv()
         self.PASSWORD = os.getenv("WEATHER_POST_PASSWORD")
+        print(self.PASSWORD)
         self.logfile = "LOG.txt"
         self.mode = mode
         self.air_quality_sensor = PiicoDev_ENS160()   # Initialise the ENS160 module
