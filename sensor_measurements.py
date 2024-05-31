@@ -1,6 +1,9 @@
 # Read environmental metrics from PiicoDev sensors
 from enum import Enum
 from typing import Dict, Any, Union
+import os
+import requests
+from datetime import datetime
 
 from PiicoDev_ENS160 import PiicoDev_ENS160 # Air quality sensor
 from PiicoDev_BME280 import PiicoDev_BME280 # Atmospheric sensor
@@ -13,6 +16,7 @@ class EnvironmentSensor:
         PROD = "Prod"
 
     def __init__(self, mode=Mode.TEST) -> None:
+        self.logfile = "LOG.txt"
         self.mode = mode
         self.air_quality_sensor = PiicoDev_ENS160()   # Initialise the ENS160 module
         self.atmospheric_sensor = PiicoDev_BME280()
@@ -70,9 +74,71 @@ class EnvironmentSensor:
             sleep_ms(1000)
 
     def prod_mode(self):
-        pass
+        data = self.get_all_sensor_values()
+        # Also add in password to data
+        data["password"] = os.environ.get("WEATHER_POST_PASSWORD=6f0Vy71AgOLXHjaptuNJH3T2flcoOIuJ")
+        # Post to my api endpoint to add to database
+        self.make_post_request("https://api.ashwingur.com/weather", data)
+
+    def make_post_request(self, url, data, max_attempts=3):
+        """
+        Make a POST request to the specified URL with the provided data.
+        
+        Parameters:
+            url (str): The URL endpoint to send the POST request to.
+            data (dict): The data to be sent in the POST request.
+            max_attempts (int): The maximum number of attempts to make the request (default: 3).
+        
+        Returns:
+            requests.Response: The response object if the request was successful, else None.
+        """
+        for attempt in range(1, max_attempts + 1):
+            try:
+                response = requests.post(url, data=data)
+                if response.status_code == 201:
+                    print("POST request was successful!")
+                    self.log_message(f"POST success, data: {data}", self.logfile)
+                    return response
+                else:
+                    print(f"Attempt {attempt}: POST request failed with status code: {response.status_code}")
+                    self.log_message(f"Attempt {attempt}: POST request failed with status code: {response.status_code}", self.logfile)
+            except requests.RequestException as e:
+                print(f"Attempt {attempt}: An error occurred: {e}")
+                self.log_message(f"Attempt {attempt}: An error occurred: {e}", self.logfile)
+            
+            # If this is not the last attempt, wait for a moment before retrying
+            if attempt < max_attempts:
+                print("Retrying in 1 second...")
+                sleep_ms(3000)
+        
+        print(f"Reached maximum number of attempts ({max_attempts}). Giving up.")
+        return None
+
+    def log_message(self, message, log_file):
+        """
+        Log a message to a text file with a timestamp.
+
+        Parameters:
+            message (str): The message to log.
+            log_file (str): The path to the log file.
+
+        Returns:
+            None
+        """
+        # Get the current timestamp
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        # Create the log message with timestamp
+        log_entry = f"[{timestamp}] {message}\n"
+
+        # Ensure the directory of the log file exists
+        os.makedirs(os.path.dirname(log_file), exist_ok=True)
+
+        # Write the log message to the file
+        with open(log_file, "a") as file:
+            file.write(log_entry)
 
 
 if __name__ == '__main__':
-    sensor = EnvironmentSensor(mode=EnvironmentSensor.Mode.TEST)
+    sensor = EnvironmentSensor(mode=EnvironmentSensor.Mode.PROD)
     sensor.run()
