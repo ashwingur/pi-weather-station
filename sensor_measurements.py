@@ -4,6 +4,7 @@ from typing import Dict, Any, Union
 import os
 import requests
 from datetime import datetime
+from dotenv import load_dotenv
 
 from PiicoDev_ENS160 import PiicoDev_ENS160 # Air quality sensor
 from PiicoDev_BME280 import PiicoDev_BME280 # Atmospheric sensor
@@ -16,6 +17,8 @@ class EnvironmentSensor:
         PROD = "Prod"
 
     def __init__(self, mode=Mode.TEST) -> None:
+        load_dotenv()
+        self.PASSWORD = os.getenv("WEATHER_POST_PASSWORD")
         self.logfile = "LOG.txt"
         self.mode = mode
         self.air_quality_sensor = PiicoDev_ENS160()   # Initialise the ENS160 module
@@ -76,7 +79,7 @@ class EnvironmentSensor:
     def prod_mode(self):
         data = self.get_all_sensor_values()
         # Also add in password to data
-        data["password"] = os.environ.get("WEATHER_POST_PASSWORD=6f0Vy71AgOLXHjaptuNJH3T2flcoOIuJ")
+        data["password"] = os.environ.get(self.PASSWORD)
         print(f'data is {data}')
         # Post to my api endpoint to add to database
         self.make_post_request("https://api.ashwingur.com/weather", data)
