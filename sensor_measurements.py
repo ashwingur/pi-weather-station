@@ -67,7 +67,7 @@ class EnvironmentSensor:
             values = self.get_all_sensor_values()
             for key, val in values.items():
                 print(f'{key}: {val}')
-                print('--------------------------')
+            print('--------------------------')
             sleep_ms(1000)
 
     def prod_mode(self):
