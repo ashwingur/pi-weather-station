@@ -77,6 +77,7 @@ class EnvironmentSensor:
         data = self.get_all_sensor_values()
         # Also add in password to data
         data["password"] = os.environ.get("WEATHER_POST_PASSWORD=6f0Vy71AgOLXHjaptuNJH3T2flcoOIuJ")
+        print(f'data is {data}')
         # Post to my api endpoint to add to database
         self.make_post_request("https://api.ashwingur.com/weather", data)
 
