@@ -64,6 +64,10 @@ class EnvironmentSensor:
     def test_mode(self):
         while True:
             print(self.get_all_sensor_values())
+            values = self.get_all_sensor_values
+            for key, val in values.items():
+                print(f'{key}: {val}')
+                print('--------------------------')
             sleep_ms(1000)
 
     def prod_mode(self):
@@ -73,18 +77,3 @@ class EnvironmentSensor:
 if __name__ == '__main__':
     sensor = EnvironmentSensor(mode=EnvironmentSensor.Mode.TEST)
     sensor.run()
-
-# while True:
-#     # Read from the sensor
-#     aqi = air_quality_sensor.aqi
-#     tvoc = air_quality_sensor.tvoc
-#     eco2 = air_quality_sensor.eco2
-    
-#     # Print air quality metrics
-#     print('    AQI: ' + str(aqi.value) + ' [' + str(aqi.rating) +']')
-#     print('   TVOC: ' + str(tvoc) + ' ppb')
-#     print('   eCO2: ' + str(eco2.value) + ' ppm [' + str(eco2.rating) +']')
-#     print(' Status: ' + air_quality_sensor.operation)
-#     print('--------------------------------')
-    
-#     sleep_ms(1000)
