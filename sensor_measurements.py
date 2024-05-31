@@ -19,7 +19,6 @@ class EnvironmentSensor:
     def __init__(self, mode=Mode.TEST) -> None:
         load_dotenv()
         self.PASSWORD = os.getenv("WEATHER_POST_PASSWORD")
-        print(self.PASSWORD)
         self.logfile = "LOG.txt"
         self.mode = mode
         self.air_quality_sensor = PiicoDev_ENS160()   # Initialise the ENS160 module
@@ -80,7 +79,7 @@ class EnvironmentSensor:
     def prod_mode(self):
         data = self.get_all_sensor_values()
         # Also add in password to data
-        data["password"] = os.environ.get(self.PASSWORD)
+        data["password"] = self.PASSWORD
         print(f'data is {data}')
         # Post to my api endpoint to add to database
         self.make_post_request("https://api.ashwingur.com/weather", data)
