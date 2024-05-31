@@ -100,7 +100,7 @@ class EnvironmentSensor:
                     self.log_message(f"POST success, data: {data}", self.logfile)
                     return response
                 else:
-                    print(f"Attempt {attempt}: POST request failed with status code: {response.status_code}")
+                    print(f"Attempt {attempt}: POST request failed with status code: {response.status_code}. Response: {response.text}")
                     self.log_message(f"Attempt {attempt}: POST request failed with status code: {response.status_code}", self.logfile)
             except requests.RequestException as e:
                 print(f"Attempt {attempt}: An error occurred: {e}")
