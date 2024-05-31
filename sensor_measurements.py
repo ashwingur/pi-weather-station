@@ -4,7 +4,7 @@ from typing import Dict, Any, Union
 
 from PiicoDev_ENS160 import PiicoDev_ENS160 # Air quality sensor
 from PiicoDev_BME280 import PiicoDev_BME280 # Atmospheric sensor
-from PiicoDev_VEML6030 import PiicoDev_VEML6030
+from PiicoDev_VEML6030 import PiicoDev_VEML6030 # Light sensor
 from PiicoDev_Unified import sleep_ms       # a cross-platform sleep function
 
 class EnvironmentSensor:
@@ -16,7 +16,7 @@ class EnvironmentSensor:
         self.mode = mode
         self.air_quality_sensor = PiicoDev_ENS160()   # Initialise the ENS160 module
         self.atmospheric_sensor = PiicoDev_BME280()
-        self.light_sensor = PiicoDev_BME280()
+        self.light_sensor = PiicoDev_VEML6030()
 
     def run(self):
         if self.mode == EnvironmentSensor.Mode.TEST:
