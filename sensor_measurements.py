@@ -64,7 +64,7 @@ class EnvironmentSensor:
     def test_mode(self):
         while True:
             print(self.get_all_sensor_values())
-            values = self.get_all_sensor_values
+            values = self.get_all_sensor_values()
             for key, val in values.items():
                 print(f'{key}: {val}')
                 print('--------------------------')
