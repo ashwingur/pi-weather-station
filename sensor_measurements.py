@@ -131,9 +131,6 @@ class EnvironmentSensor:
         # Create the log message with timestamp
         log_entry = f"[{timestamp}] {message}\n"
 
-        # Ensure the directory of the log file exists
-        os.makedirs(os.path.dirname(log_file), exist_ok=True)
-
         # Write the log message to the file
         with open(log_file, "a") as file:
             file.write(log_entry)
