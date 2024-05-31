@@ -62,7 +62,7 @@ class EnvironmentSensor:
             "pressure": pres_hPa,
             "humidity": humRH,
             "temperature": tempC,
-            "air_quality_index": aqi,
+            "air_quality_index": aqi[0],
             "TVOC": tvoc,
             "eCO2": eco2,
             "ambient_light": light_val
