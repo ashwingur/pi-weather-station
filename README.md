@@ -21,7 +21,7 @@ Make sure charger is 5V and supplies enough current. The one I used is an old ip
 
 Use the Raspberry Pi imager app to format a micro SD card. In additional settings, ensure that a hostname is setup with username and password, and allow for SSH connections. This way we don't need to connect any peripherals to the Pi, only the power cable.
 
-You can now SSH into the pi
+You can now SSH into the pi (mine is `ashwin@weatherstation.local`)
 
 ```
 ssh yourusername@yourhostname.local
