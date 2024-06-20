@@ -20,6 +20,7 @@ class EnvironmentSensor:
     def __init__(self, mode=Mode.TEST) -> None:
         load_dotenv()
         self.PASSWORD = os.getenv("WEATHER_POST_PASSWORD")
+        self.user_id = os.getenv("USER_ID")
         self.logfile = "LOG.txt"
         self.mode = mode
         self.air_quality_sensor = PiicoDev_ENS160()   # Initialise the ENS160 module
@@ -30,8 +31,7 @@ class EnvironmentSensor:
     
     def _initialize_cookie(self):
         if 'user_id' not in self.session.cookies:
-            user_id = str(uuid.uuid4())
-            self.session.cookies.set('user_id', user_id)
+            self.session.cookies.set('user_id', self.user_id)
 
     def run(self):
         if self.mode == EnvironmentSensor.Mode.TEST:
