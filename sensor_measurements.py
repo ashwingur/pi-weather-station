@@ -84,7 +84,7 @@ class EnvironmentSensor:
         # Post to my api endpoint to add to database
         self.make_post_request("https://api.ashwingur.com/weather", data)
 
-    def make_post_request(self, url, data, max_attempts=3):
+    def make_post_request(self, url, data, max_attempts=3, cookies=None):
         """
         Make a POST request to the specified URL with the provided data.
         
@@ -98,7 +98,7 @@ class EnvironmentSensor:
         """
         for attempt in range(1, max_attempts + 1):
             try:
-                response = requests.post(url, json=data)
+                response = requests.post(url, json=data, cookies=cookies)
                 if response.status_code == 201:
                     print("POST request was successful!")
                     self.log_message(f"POST success, data: {data}", self.logfile)
