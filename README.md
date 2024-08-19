@@ -1,4 +1,5 @@
 # pi-weather-station
+Link to website displaying the data: https://www.ashwingur.com/Weather
 
 Code for reading atmospheric, air quality and light sensor data on the Raspberry-Pi using PiicoDev components. This script runs once every 5 minutes and posts the data to my api endpoint at api.ashwingur.com/weather.
 
