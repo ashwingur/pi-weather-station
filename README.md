@@ -21,7 +21,7 @@ Make sure charger is 5V and supplies enough current. The one I used is an old ip
 
 Use the Raspberry Pi imager app to format a micro SD card. In additional settings, ensure that a hostname is setup with username and password, and allow for SSH connections. This way we don't need to connect any peripherals to the Pi, only the power cable.
 
-You can now SSH into the pi (mine is `ashwin@weatherstation.local`)
+You can now SSH into the pi (mine is `ashwin@weatherstation.local` or `ssh ashwin@raspberrypi`)
 
 ```
 ssh yourusername@yourhostname.local
@@ -52,4 +52,11 @@ We need to make sure it runs with the virtual environment python version. Paste 
 
 ```
 */5 * * * * cd /home/ashwin/Desktop/piicodev-env/pi-weather-station && /home/ashwin/Desktop/piicodev-env/bin/python sensor_measurements.py
+```
+
+Note my API needs 2 environment variables, create a `.env` file.
+
+```
+USER_ID=PI-WEATHER-STATION
+WEATHER_POST_PASSWORD=XXX
 ```
