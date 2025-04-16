@@ -1,4 +1,5 @@
 # pi-weather-station
+
 Link to website displaying the data: https://www.ashwingur.com/Weather
 
 Code for reading atmospheric, air quality and light sensor data on the Raspberry-Pi using PiicoDev components. This script runs once every 5 minutes and posts the data to my api endpoint at api.ashwingur.com/weather.
@@ -34,7 +35,21 @@ For the PiicoDev libraries to work, we need to create a virtual python environme
 mkdir piicodev-env
 python3 -m venv ~/Desktop/piicodev-env/
 source ~/Desktop/piicodev-env/bin/activate
-pip install piicodev
+pip install -r requirements.txt
+```
+
+The requirements are:
+
+```
+certifi==2025.1.31
+charset-normalizer==3.4.1
+dotenv==0.9.9
+idna==3.10
+piicodev==1.10.3
+python-dotenv==1.1.0
+requests==2.32.3
+smbus2==0.5.0
+urllib3==2.4.0
 ```
 
 Ensure I2C is enabled on the pi through the following menu
